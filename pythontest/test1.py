@@ -1,5 +1,5 @@
 from datetime import datetime
-from flask import Flask, request
+from flask import Flask, request , abort
 from babel.dates import format_datetime
 from urllib.parse import unquote, quote
 from pytz import timezone
@@ -22,7 +22,7 @@ def date_and_time():
         try:
             datetime_changed = format_datetime(current_time, format=time_format, locale=lang)
         except ValueError:
-            return f'Invalid time format "{time_format}"'
+            return abort(400, f'Invalid time format "{time_format}"')
     else:
         datetime_changed = format_datetime(current, format='dd MMMM y', locale=lang)
 
